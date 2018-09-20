@@ -19,20 +19,11 @@ class Menu extends React.Component {
             props.board.map((row, rowIndex) => {    
                 if(above == rowIndex) {
                     if(row[props.cell] !== null && row[props.cell] !== undefined) {
-                        // const elem = document.getElementById(`${rowIndex}-${props.cell}`)
-                        // elem.addEventListener("click", function(){
-                        //     if(!alreadyFired) {
-                        //         console.log(se)
-                        //         alreadyFired = true
-                        //     }
-                        // })
-                        // elem.style.backgroundColor = 'red'
                         ids.push(`${rowIndex}-${props.cell}`)
                     }
                 }
                 if(below == rowIndex) {
                     if(row[props.cell] !== null && row[props.cell] !== undefined) {
-                        
                         ids.push(`${rowIndex}-${props.cell}`)
                     }
                 }
@@ -40,13 +31,11 @@ class Menu extends React.Component {
                     row.map((cell, cellIndex) => {
                         if(left == cellIndex) {
                             if(cell !== null && cell !== undefined) {
-                                
                                 ids.push(`${rowIndex}-${cellIndex}`)
                             }
                         }
                         if(right == cellIndex) {
                             if(cell !== null && cell !== undefined) {
-                               
                                 ids.push(`${rowIndex}-${cellIndex}`)
                             }
                         }
