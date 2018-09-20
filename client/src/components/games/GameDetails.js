@@ -533,7 +533,8 @@ class GameDetails extends PureComponent {
   } 
 }
 
-ohm = (ids, unitFiring) => {
+
+fire = (ids, unitFiring) => {
   const idsArr = ids.split('-')
   const row = idsArr[0]
   const cell = idsArr[1]
@@ -595,8 +596,63 @@ ohm = (ids, unitFiring) => {
     }
   }
     calculateHP()
-    this.props.updateGame2(this.props.game.id, this.props.game.board)
-  }
+   this.props.updateGame2(this.props.game.id, this.props.game.board)
+}
+
+fireEnemy = () => { 
+  // console.log(this.props.game)
+  // console.log(this.state)
+  const props = this.props.game
+  const rowToFire = this.state.rowCanFire
+  const cellToFire = this.state.cellCanFire
+  const unitFiring = [rowToFire, cellToFire]
+  const above = rowToFire-1
+  const below = rowToFire+1
+  const left = cellToFire-1
+  const right = cellToFire+1
+  let alreadyFired = false
+  let ids = []
+  
+  props.board.map((row, rowIndex) => {
+      if(above == rowIndex) {
+          if(row[cellToFire] !== null && row[cellToFire] !== undefined) {
+              ids.push(`${rowIndex}-${cellToFire}`)
+          }
+      }
+      if(below == rowIndex) {
+          if(row[cellToFire] !== null && row[cellToFire] !== undefined) {
+              ids.push(`${rowIndex}-${cellToFire}`)
+          }
+      }
+      if(rowIndex == rowToFire) {
+          row.map((cell, cellIndex) => {
+              if(left == cellIndex) {
+                  if(cell !== null && cell !== undefined) {
+                      ids.push(`${rowIndex}-${cellIndex}`)
+                  }
+              }
+              if(right == cellIndex) {
+                  if(cell !== null && cell !== undefined) {
+                      ids.push(`${rowIndex}-${cellIndex}`)
+                  }
+              }
+          })
+      }
+  })
+  ids.map(id => {
+      const elem = document.getElementById(id)
+      const fire = this.fire
+      elem.addEventListener("click", function(){
+          if(!alreadyFired) {
+              fire(id, unitFiring)
+              alreadyFired = true
+              elem.style.backgroundColor = 'transparent'
+          }
+      })
+      elem.style.backgroundColor = 'red'
+  })
+}
+
 
   render() {
     const {game, users, authenticated, userId} = this.props
@@ -618,7 +674,7 @@ ohm = (ids, unitFiring) => {
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
-      <Menu showMenu={this.state.showMenu} ohm={this.ohm} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
+      <Menu showMenu={this.state.showMenu} fireEnemy={this.fireEnemy} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
 
       {
         game.status === 'started' &&
