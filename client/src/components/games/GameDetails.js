@@ -529,8 +529,74 @@ class GameDetails extends PureComponent {
       cellCanFire: toCell
     }), setTimeout(() => {
       this.check(toRow, toCell)
-    }, 300) 
+    }, 400) 
   } 
+}
+
+
+fire = (ids, unitFiring) => {
+  const idsArr = ids.split('-')
+  const row = idsArr[0]
+  const cell = idsArr[1]
+  const unitToHit = this.props.game.board[row][cell]
+  const unitFiringHealth = this.props.game.board[unitFiring[0]][unitFiring[1]].health
+  const luckFactor = () => {
+    console.log('random number' + Math.floor(Math.random() * (12 - 9) + 9))
+    return Math.floor(Math.random() * (12 - 9) + 9)
+    }
+  const calculateHpGain = (health) => {
+      if ( (health/9 ) > 0.5) {
+        return health
+      } 
+      else {
+        return health + 1
+      }
+    }
+    const calculateDamage = (health) => {
+      console.log('Calculate damage' + ( (60 * luckFactor())/100) * (calculateHpGain(health) ))
+      return ((60 * luckFactor())/100) * (calculateHpGain(health))
+    }
+    // Damage logic
+    const calculateHP = () => {
+    if (calculateDamage(unitFiringHealth) >= 85) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 9
+    }
+    else if (calculateDamage(unitFiringHealth) >= 75) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 8
+    }
+    else if (calculateDamage(unitFiringHealth) >= 65 && calculateDamage(unitFiringHealth) < 74) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 7
+    }
+    else if (calculateDamage(unitFiringHealth) >= 55 && calculateDamage(unitFiringHealth) < 64) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 6
+    }
+    else if (calculateDamage(unitFiringHealth) >= 45 && calculateDamage(unitFiringHealth) < 54) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 5
+    }
+    else if (calculateDamage(unitFiringHealth) >= 35 && calculateDamage(unitFiringHealth) < 44) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 4
+    }
+    else if (calculateDamage(unitFiringHealth) >= 25 && calculateDamage(unitFiringHealth) < 34) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 3
+    }
+    else if (calculateDamage(unitFiringHealth) >= 15 && calculateDamage(unitFiringHealth) < 24) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 2
+    }
+    else if (calculateDamage(unitFiringHealth) >= 5 && calculateDamage(unitFiringHealth) < 14) {
+      console.log(unitToHit.health)
+      unitToHit.health = unitToHit.health - 1
+    }
+  }
+    calculateHP()
+   this.props.updateGame2(this.props.game.id, this.props.game.board)
 }
 
 fireEnemy = () => { 
@@ -587,19 +653,6 @@ fireEnemy = () => {
   })
 }
 
-  fire = (ids, unitFiring) => {
-    const idsArr = ids.split('-')
-    const row = idsArr[0]
-    const cell = idsArr[1]
-    const row2 = unitFiring[0]
-    const cell2 = unitFiring[1]
-    const unitToHit = this.props.game.board[row][cell]
-    unitToHit.health = unitToHit.health - 5
-    if(unitToHit.health < 1) {
-      this.props.game.board[row][cell] = null
-    }
-    this.props.updateGame2(this.props.game.id, this.props.game.board)
-  }
 
   render() {
     const {game, users, authenticated, userId} = this.props
