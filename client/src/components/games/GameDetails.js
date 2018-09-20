@@ -23,6 +23,21 @@ class GameDetails extends PureComponent {
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
+  
+    luckFactor = () => {
+      return Math.floor(Math.random() * (12 - 9) + 9)
+    }
+    calculateHpGain = (health) => {
+      if ( (health/9 ) > 0.5) {
+        return health
+      } 
+      else {
+        return health + 1
+      }
+    }
+    calculateDamage = (health) => {
+      return ((60 * this.luckFactor())/100) * (this.calculateHpGain(health))
+    }
 
   toggleMenu = function() {
     this.setState({ showMenu: !this.state.showMenu });
@@ -533,6 +548,9 @@ class GameDetails extends PureComponent {
   } 
 }
 
+updateWithHealth = (id, game) => {
+  this.props.updateGame2(id, game)
+}
 
 fire = (ids, unitFiring) => {
   const idsArr = ids.split('-')

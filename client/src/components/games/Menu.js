@@ -55,7 +55,6 @@ class Menu extends React.Component {
         //         elem.style.backgroundColor = 'red'
         //     })
         //     console.log(ids)
-
         // }
         return (
             <div>
