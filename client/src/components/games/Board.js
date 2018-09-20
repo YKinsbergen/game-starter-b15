@@ -6,6 +6,7 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
     return (
       <button
         className="board-tile"
+        id={`${rowIndex}-${cellIndex}`}
         disabled={hasTurn}
         onClick={() => {
           if (theState.theRow < 0){
@@ -21,6 +22,7 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
     return (
       <button
         className="board-tile"
+        id={`${rowIndex}-${cellIndex}`}
         disabled={hasTurn}
         onClick={() => {
           if (theState.theRow < 0){

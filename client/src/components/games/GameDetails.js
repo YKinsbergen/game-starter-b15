@@ -17,7 +17,9 @@ class GameDetails extends PureComponent {
       theCell: -1,
       gameId: 0,
       board: '',
-      showMenu: false
+      showMenu: false,
+      rowCanFire: -1,
+      cellCanFire: -1
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
@@ -31,22 +33,7 @@ class GameDetails extends PureComponent {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
     }
-    if(!this.props.game) console.log("noo")
-    if(this.props.game) console.log("see")
   }
-  
-  // createUnits() {
-  //   game.board.map((row) => {
-  //     row.map((cell) => {
-  //       if(cell == 'red') {
-  //         this.setState({red: [...this.state.red, cell]})
-  //       }
-  //       if(cell == 'blue') {
-  //         this.setState({blue: [...this.state.blue, cell]})
-  //       }
-  //     })
-  //   })
-  // }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
   
@@ -130,7 +117,7 @@ class GameDetails extends PureComponent {
           })
           console.log('row above or below you has an enemy')
         } else {
-          return console.log('No enemy in the vicinity', this.state)
+          return console.log('No enemy in the vicinity')
         }
       }
     }
@@ -152,7 +139,9 @@ class GameDetails extends PureComponent {
     updateGame1(game.id, board)
     this.setState({
       theRow: -1, 
-      theCell: -1
+      theCell: -1,
+      rowCanFire: toRow,
+      cellCanFire: toCell
     }), setTimeout(() => {
       this.check(toRow, toCell)
     }, 300) 
@@ -180,7 +169,7 @@ class GameDetails extends PureComponent {
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
-      <Menu showMenu={this.state.showMenu} board={this.state.board} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
+      <Menu showMenu={this.state.showMenu} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
 
       {
         game.status === 'started' &&
