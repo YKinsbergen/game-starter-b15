@@ -591,6 +591,7 @@ fire = (ids, unitFiring) => {
       console.log('calculating hp failed')
     }
   }
+
   calculateHp(unitFiringHealth)
 
   if (unitToHit.health < 1) {
