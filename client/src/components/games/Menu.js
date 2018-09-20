@@ -8,7 +8,7 @@ class Menu extends React.Component {
     render() {
         const fireEnemy = () => { 
             const props = this.props
-            const unitFiring = props.board[props.row][props.cell]
+            const unitFiring = [props.row, props.cell]
             const above = props.row-1
             const below = props.row+1
             const left = props.cell-1
@@ -47,8 +47,9 @@ class Menu extends React.Component {
                 const elem = document.getElementById(id)
                 elem.addEventListener("click", function(){
                     if(!alreadyFired) {
-                        props.ohm(id)
+                        props.ohm(id, unitFiring)
                         alreadyFired = true
+                        elem.style.backgroundColor = 'transparent'
                     }
                 })
                 elem.style.backgroundColor = 'red'

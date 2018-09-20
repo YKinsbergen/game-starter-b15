@@ -533,13 +533,17 @@ class GameDetails extends PureComponent {
   } 
 }
 
-  ohm = (ids) => {
+  ohm = (ids, unitFiring) => {
     const idsArr = ids.split('-')
     const row = idsArr[0]
     const cell = idsArr[1]
+    const row2 = unitFiring[0]
+    const cell2 = unitFiring[1]
     const unitToHit = this.props.game.board[row][cell]
     unitToHit.health = unitToHit.health - 5
-
+    if(unitToHit.health < 1) {
+      this.props.game.board[row][cell] = null
+    }
     this.props.updateGame2(this.props.game.id, this.props.game.board)
   }
 
