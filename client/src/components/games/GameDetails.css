@@ -4,3 +4,17 @@
   padding: 20px;
   width: 60%;
 }
+
+#unit-id {
+  border-radius: 3px;
+  background-color: yellow;
+  transition: 0.2s;
+}
+
+#unit-id:hover {
+  background-color: #F78E37;
+  border-radius: 5px;
+  border-color: grey;
+  cursor: pointer;
+  transition: 0.2s;
+}

@@ -9,7 +9,6 @@ import Board from './Board'
 import Menu from './Menu'
 import './GameDetails.css'
 
-// new commit
 
 class GameDetails extends PureComponent {
   constructor(props) {
@@ -557,42 +556,43 @@ fire = (ids, unitFiring) => {
       }
     }
     const calculateDamage = (health) => {
-      return ((60 * luckFactor())/100) * (calculateHpGain(health))
+      return (Math.round( (60 * luckFactor()) /100 ) * ( calculateHpGain(health) ) )
     }
     // Damage logic
     const calculateHP = (health) => {
     if (calculateDamage(health) >= 85) {
       return (unitToHit.health = unitToHit.health - 9)
     }
-    else if (calculateDamage(health) >= 75 && calculateDamage(health) < 84) {
+    else if (calculateDamage(health) >= 75 && calculateDamage(health) <= 84) {
       return (unitToHit.health = unitToHit.health - 8)
     }
-    else if (calculateDamage(health) >= 65 && calculateDamage(health) < 74) {
+    else if (calculateDamage(health) >= 65 && calculateDamage(health) <= 74) {
       return (unitToHit.health = unitToHit.health - 7)
     }
-    else if (calculateDamage(health) >= 55 && calculateDamage(health) < 64) {
+    else if (calculateDamage(health) >= 55 && calculateDamage(health) <= 64) {
       return (unitToHit.health = unitToHit.health - 6)
     }
-    else if (calculateDamage(health) >= 45 && calculateDamage(health) < 54) {
+    else if (calculateDamage(health) >= 45 && calculateDamage(health) <= 54) {
       return (unitToHit.health = unitToHit.health - 5)
     }
-    else if (calculateDamage(health) >= 35 && calculateDamage(health) < 44) {
+    else if (calculateDamage(health) >= 35 && calculateDamage(health) <= 44) {
       return (unitToHit.health = unitToHit.health - 4)
     }
-    else if (calculateDamage(health) >= 25 && calculateDamage(health) < 34) {
+    else if (calculateDamage(health) >= 25 && calculateDamage(health) <= 34) {
       return (unitToHit.health = unitToHit.health - 3)
     }
-    else if (calculateDamage(health) >= 15 && calculateDamage(health) < 24) {
+    else if (calculateDamage(health) >= 15 && calculateDamage(health) <= 24) {
       return (unitToHit.health = unitToHit.health - 2)
     }
-    else if (calculateDamage(health) >= 5 && calculateDamage(health) < 14) {
+    else if (calculateDamage(health) >= 5 && calculateDamage(health) <= 14) {
       return (unitToHit.health = unitToHit.health - 1)
     }
     else if (calculateDamage(health) > 0 && calculateDamage(health) < 5) {
       console.log('Damage calculated to be under 5, impossible')
     }
     else {
-      console.log('calculating hp failed', 'Health of unit to hit:' + unitToHit.health, 'Health of current unit:' + unitFiringHealth, 'calculated damage:' + calculateDamage(unitToHit.health))
+      console.log('calculating hp failed, re-running function', 'Health of unit to hit:' + unitToHit.health, 'Health of current unit:' + unitFiringHealth, 'calculated damage:' + calculateDamage(unitToHit.health))
+      calculateHP(unitFiringHealth)
     }
   }
   calculateHP(unitFiringHealth)
@@ -661,7 +661,7 @@ fireEnemy = () => {
               elem.style.backgroundColor = 'transparent'
           }
       })
-      elem.style.backgroundColor = 'red'
+    elem.id = 'unit-id'
   })
 }
 
