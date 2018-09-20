@@ -595,8 +595,11 @@ fire = (ids, unitFiring) => {
       unitToHit.health = unitToHit.health - 1
     }
   }
-    calculateHP()
-   this.props.updateGame2(this.props.game.id, this.props.game.board)
+  calculateHP()
+  if(unitToHit.health < 1) {
+    this.props.game.board[row][cell] = null
+  }
+  this.props.updateGame2(this.props.game.id, this.props.game.board)
 }
 
 fireEnemy = () => { 
