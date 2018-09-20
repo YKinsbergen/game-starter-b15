@@ -10,7 +10,8 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
         disabled={hasTurn}
         onClick={() => {
           if (theState.theRow < 0){
-          return selectUnit(rowIndex, cellIndex) } else {
+          return selectUnit(rowIndex, cellIndex) } 
+          else if (theState.theRow >= 0 && theState.theRow < 70) {
           return makeMove(rowIndex, cellIndex)
           }
         }
@@ -26,8 +27,12 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
         disabled={hasTurn}
         onClick={() => {
           if (theState.theRow < 0){
-          return selectUnit(rowIndex, cellIndex) } else {
+          return selectUnit(rowIndex, cellIndex) } 
+          else if (theState.theRow >= 0 && theState.theRow < 70) {
           return makeMove(rowIndex, cellIndex)
+          }
+          else {
+            return 
           }
         }
         } 
