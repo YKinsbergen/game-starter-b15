@@ -17,7 +17,9 @@ class GameDetails extends PureComponent {
       theCell: -1,
       gameId: 0,
       board: '',
-      showMenu: false
+      showMenu: false,
+      rowCanFire: -1,
+      cellCanFire: -1
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
@@ -522,7 +524,9 @@ class GameDetails extends PureComponent {
     updateGame1(game.id, board)
     this.setState({
       theRow: -1, 
-      theCell: -1
+      theCell: -1,
+      rowCanFire: toRow,
+      cellCanFire: toCell
     }), setTimeout(() => {
       this.check(toRow, toCell)
     }, 300) 
@@ -550,7 +554,7 @@ class GameDetails extends PureComponent {
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
-      <Menu showMenu={this.state.showMenu} board={this.state.board} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
+      <Menu showMenu={this.state.showMenu} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
 
       {
         game.status === 'started' &&
