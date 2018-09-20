@@ -17,7 +17,7 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
         }
         } 
         key={`${rowIndex}-${cellIndex}`}
-      >{symbol.name}</button>
+      >{symbol.name}{symbol.health}</button>
     )
   } else {
     return (
