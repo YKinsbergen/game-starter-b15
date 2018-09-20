@@ -23,6 +23,21 @@ class GameDetails extends PureComponent {
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
+  
+    luckFactor = () => {
+      return Math.floor(Math.random() * (12 - 9) + 9)
+    }
+    calculateHpGain = (health) => {
+      if ( (health/9 ) > 0.5) {
+        return health
+      } 
+      else {
+        return health + 1
+      }
+    }
+    calculateDamage = (health) => {
+      return ((60 * this.luckFactor())/100) * (this.calculateHpGain(health))
+    }
 
   toggleMenu = function() {
     this.setState({ showMenu: !this.state.showMenu });
@@ -533,6 +548,9 @@ class GameDetails extends PureComponent {
   } 
 }
 
+updateWithHealth = (id, game) => {
+  this.props.updateGame2(id, game)
+}
 
 fire = (ids, unitFiring) => {
   const idsArr = ids.split('-')
@@ -540,66 +558,49 @@ fire = (ids, unitFiring) => {
   const cell = idsArr[1]
   const unitToHit = this.props.game.board[row][cell]
   const unitFiringHealth = this.props.game.board[unitFiring[0]][unitFiring[1]].health
-  const luckFactor = () => {
-    console.log('random number' + Math.floor(Math.random() * (12 - 9) + 9))
-    return Math.floor(Math.random() * (12 - 9) + 9)
-    }
-  const calculateHpGain = (health) => {
-      if ( (health/9 ) > 0.5) {
-        return health
-      } 
-      else {
-        return health + 1
-      }
-    }
-    const calculateDamage = (health) => {
-      console.log('Calculate damage' + ( (60 * luckFactor())/100) * (calculateHpGain(health) ))
-      return ((60 * luckFactor())/100) * (calculateHpGain(health))
-    }
     // Damage logic
-    const calculateHP = () => {
-    if (calculateDamage(unitFiringHealth) >= 85) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 9
+    const calculateHp = (health) => {
+    if (this.calculateDamage(health) >= 85) {
+      return (unitToHit.health = unitToHit.health - 9)
     }
-    else if (calculateDamage(unitFiringHealth) >= 75) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 8
+    else if (this.calculateDamage(health) >= 75) {
+      return (unitToHit.health = unitToHit.health - 8)
     }
-    else if (calculateDamage(unitFiringHealth) >= 65 && calculateDamage(unitFiringHealth) < 74) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 7
+    else if (this.calculateDamage(health) >= 65 && this.calculateDamage(health) < 74) {
+      return (unitToHit.health = unitToHit.health - 7)
     }
-    else if (calculateDamage(unitFiringHealth) >= 55 && calculateDamage(unitFiringHealth) < 64) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 6
+    else if (this.calculateDamage(health) >= 55 && this.calculateDamage(health) < 64) {
+      return (unitToHit.health = unitToHit.health - 6)
     }
-    else if (calculateDamage(unitFiringHealth) >= 45 && calculateDamage(unitFiringHealth) < 54) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 5
+    else if (this.calculateDamage(health) >= 45 && this.calculateDamage(health) < 54) {
+      return (unitToHit.health = unitToHit.health - 5)
     }
-    else if (calculateDamage(unitFiringHealth) >= 35 && calculateDamage(unitFiringHealth) < 44) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 4
+    else if (this.calculateDamage(health) >= 35 && this.calculateDamage(health) < 44) {
+      return (unitToHit.health = unitToHit.health - 4)
     }
-    else if (calculateDamage(unitFiringHealth) >= 25 && calculateDamage(unitFiringHealth) < 34) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 3
+    else if (this.calculateDamage(health) >= 25 && this.calculateDamage(health) < 34) {
+      return (unitToHit.health = unitToHit.health - 3)
     }
-    else if (calculateDamage(unitFiringHealth) >= 15 && calculateDamage(unitFiringHealth) < 24) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 2
+    else if (this.calculateDamage(health) >= 15 && this.calculateDamage(health) < 24) {
+      return (unitToHit.health = unitToHit.health - 2)
     }
-    else if (calculateDamage(unitFiringHealth) >= 5 && calculateDamage(unitFiringHealth) < 14) {
-      console.log(unitToHit.health)
-      unitToHit.health = unitToHit.health - 1
+    else if (this.calculateDamage(health) >= 5 && this.calculateDamage(health) < 14) {
+      return (unitToHit.health = unitToHit.health - 1)
+    } 
+    else {
+      console.log('calculating hp failed')
     }
   }
-  calculateHP()
-  if(unitToHit.health < 1) {
+
+  calculateHp(unitFiringHealth)
+
+  if (unitToHit.health < 1) {
     this.props.game.board[row][cell] = null
   }
-  this.props.updateGame2(this.props.game.id, this.props.game.board)
+  // () => {
+  // this.props.updateGame2(this.props.game.id, this.props.game.board)
+  // }
+  this.updateWithHealth(this.props.game.id, this.props.game.board)
 }
 
 fireEnemy = () => { 
