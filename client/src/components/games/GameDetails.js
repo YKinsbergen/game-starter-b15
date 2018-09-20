@@ -9,7 +9,6 @@ import Board from './Board'
 import Menu from './Menu'
 import './GameDetails.css'
 
-// new commit
 
 class GameDetails extends PureComponent {
   constructor(props) {
@@ -557,7 +556,7 @@ fire = (ids, unitFiring) => {
       }
     }
     const calculateDamage = (health) => {
-      return ((60 * luckFactor())/100) * (calculateHpGain(health))
+      return (Math.round( (60 * luckFactor()) /100 ) * ( calculateHpGain(health) ) )
     }
     // Damage logic
     const calculateHP = (health) => {
@@ -590,7 +589,8 @@ fire = (ids, unitFiring) => {
       return (unitToHit.health = unitToHit.health - 1)
     }
     else {
-      console.log('calculating hp failed', 'Health of unit to hit:' + unitToHit.health, 'Health of current unit:' + unitFiringHealth, 'calculated damage:' + damage)
+      console.log('calculating hp failed, re-running function', 'Health of unit to hit:' + unitToHit.health, 'Health of current unit:' + unitFiringHealth, 'calculated damage:' + calculateDamage(unitToHit.health))
+      calculateHP(unitFiringHealth)
     }
   }
   calculateHP(unitFiringHealth)
@@ -659,7 +659,7 @@ fireEnemy = () => {
               elem.style.backgroundColor = 'transparent'
           }
       })
-      elem.style.backgroundColor = 'red'
+    elem.id = 'unit-id'
   })
 }
 
