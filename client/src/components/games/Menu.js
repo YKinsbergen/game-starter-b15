@@ -49,11 +49,6 @@ export default class Menu extends React.Component {
                     })
                 }
             })
-            const cellAbove = props.board[above][props.cell]
-            const cellBelow = props.board[below][props.cell]
-            const cellRight = props.board[props.row][right]
-            const cellLeft = props.board[props.row][left]
-            const ohm = [cellAbove,cellBelow,cellRight,cellLeft]
             console.log(se)
             console.log("break")
         }
