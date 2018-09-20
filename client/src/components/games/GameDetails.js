@@ -31,22 +31,7 @@ class GameDetails extends PureComponent {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
     }
-    if(!this.props.game) console.log("noo")
-    if(this.props.game) console.log("see")
   }
-  
-  // createUnits() {
-  //   game.board.map((row) => {
-  //     row.map((cell) => {
-  //       if(cell == 'red') {
-  //         this.setState({red: [...this.state.red, cell]})
-  //       }
-  //       if(cell == 'blue') {
-  //         this.setState({blue: [...this.state.blue, cell]})
-  //       }
-  //     })
-  //   })
-  // }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
   
@@ -65,75 +50,460 @@ class GameDetails extends PureComponent {
     }
   }
 
+  // Check the vicinity of the moved unit
   check = (toRow, toCell) => {
     const {game} = this.props
-    if (    // Check X co-ordinate right
-            (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== game.board[toRow][toCell] && game.board[toRow][toCell+1] !== undefined)
-            // Check X co-ordinate left
-        || (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== game.board[toRow][toCell] && game.board[toRow][toCell-1] !== undefined)
-        )
-        {
-          console.log('Enemy next to you')
-          this.toggleMenu()
-          this.setState({
-              gameId: game.id,
-              board: game.board
-            })
-          }
-            // Check Y co-ordinates
-      else if (toRow === 0) {
-        if  (
-          (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== game.turn)
-          ) 
-          {
-            // Toggle display the menu and set the state of the gameId and board
-            // The state is passed on as a prop to <Menu/> so that it can update the game after the turn is ended
-            this.toggleMenu()
-            this.setState({
-              gameId: game.id,
-              board: game.board
-            })
-            console.log('row below you has an enemy')
-          } 
-        else {
-          console.log('No enemy in the vicinity', this.state)
-          }
-        } 
-
-      else if (toRow === 5) {
-        if (
-          (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== game.turn) 
-        ) 
-        {
+    // If top left corner
+    if (toRow === 0 && toCell === 0) {
+      // Check right
+      if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
             gameId: game.id,
             board: game.board
           })
-          console.log('row above you has an enemy')
+          console.log('Enemy right of you')
         } 
         else {
-          console.log('No enemy in the vicinity', this.state)
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit right of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your right')
+      }
+      // Check down
+      if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy below you')
+        } 
+        else {
+          console.log('Friendly unit below you')
         }
       }
-      
-      else if (toRow !== 5 && toRow !== 0) {
-        if (
-          (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== game.turn) 
-        || (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== game.turn) 
-        ) 
-        {
+      else {
+        console.log('No unit below you')
+      } 
+    }
+    // If top right corner
+    else if (toRow === 0 && toCell === 5) {
+      // Check left
+      if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
             gameId: game.id,
             board: game.board
           })
-          console.log('row above or below you has an enemy')
-        } else {
-          return console.log('No enemy in the vicinity', this.state)
+          console.log('Enemy left of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit left of you')
         }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your left')
+      }
+      // Check down
+      if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy below you')
+        } 
+        else {
+          console.log('Friendly unit below you')
+        }
+      }
+      else {
+        console.log('No unit below you')
       }
     }
+    // If bottom left corner
+    else if (toRow === 5 && toCell === 0) {
+      // Check right
+      if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy right of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit right of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your right')
+      }
+      // Check up
+      if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy above you')
+        } 
+        else {
+          console.log('Friendly unit above you')
+        }
+      }
+      else {
+        console.log('No unit above you')
+      }
+    }
+    // If bottom right corner
+    else if (toRow === 5 && toCell === 5) {
+      // Check left
+      if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy left of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit left of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your left')
+      }
+      // Check up
+      if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy above you')
+        } 
+        else {
+          console.log('Friendly unit above you')
+        }
+      }
+      else {
+        console.log('No unit above you')
+      } 
+    }
+    // If top row, but not in a corner 
+    else if (toRow === 0 && (toCell !== 0 && toCell !== 5)) {
+      // Check right
+      if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy right of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit right of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your right')
+      }
+      // Check left
+      if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy left of you')
+        } 
+        else {
+          console.log('Friendly unit left of you')
+        }
+      } 
+      else {
+        console.log('No unit to your left')
+      }
+      // Check down
+      if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy below you')
+        } 
+        else {
+          console.log('Friendly unit below you')
+        }
+      }
+      else {
+        console.log('No unit below you')
+      }
+    }
+    // If bottom row, but not in a corner
+    else if (toRow === 5 && (toCell !== 0 && toCell !== 5)) {
+      // Check right
+      if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy right of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit right of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your right')
+      }
+      // Check left
+      if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy left of you')
+        } 
+        else {
+          console.log('Friendly unit left of you')
+        }
+      } 
+      else {
+        console.log('No unit to your left')
+      }
+      // Check up
+      if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy above you')
+        } 
+        else {
+          console.log('Friendly unit above you')
+        }
+      }
+      else {
+        console.log('No unit above you')
+      }
+    } 
+    // If left column, but not in corner
+    else if (toCell === 0 && (toRow !== 0 && toRow !== 5)) {
+      // Check right
+      if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy right of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit right of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your right')
+      }
+      // Check up
+      if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy above you')
+        } 
+        else {
+          console.log('Friendly unit above you')
+        }
+      }
+      else {
+        console.log('No unit above you')
+      }
+      // Check down
+      if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy below you')
+        } 
+        else {
+          console.log('Friendly unit below you')
+        }
+      }
+      else {
+        console.log('No unit below you')
+      }
+    }
+    // If left column, but not in corner
+    else if (toCell === 5 && (toRow !== 0 && toRow !== 5)) {
+      // Check left
+      if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy left of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit left of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your left')
+      }
+      // Check up
+      if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy above you')
+        } 
+        else {
+          console.log('Friendly unit above you')
+        }
+      }
+      else {
+        console.log('No unit above you')
+      }
+      // Check down
+      if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy below you')
+        } 
+        else {
+          console.log('Friendly unit below you')
+        }
+      }
+      else {
+        console.log('No unit below you')
+      }
+    } 
+    // If in the middle of the board
+    else {
+      // Check left
+      if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Enemy left of you')
+        } 
+        else {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+          console.log('Friendly unit left of you')
+        }
+      } 
+      else {
+        this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
+        console.log('No unit to your left')
+      }
+      // Check right
+      if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy right of you')
+        } 
+        else {
+          console.log('Friendly unit right of you')
+        }
+      } 
+      else {
+        console.log('No unit to your right')
+      }
+      // Check up
+      if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy above you')
+        } 
+        else {
+          console.log('Friendly unit above you')
+        }
+      }
+      else {
+        console.log('No unit above you')
+      }
+      // Check down
+      if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          console.log('Enemy below you')
+        } 
+        else {
+          console.log('Friendly unit below you')
+        }
+      }
+      else {
+        console.log('No unit below you')
+      }
+  }
+}
 
   // Make a move with the indexes from 'selectUnit()'
   makeMove = (toRow, toCell) => {
