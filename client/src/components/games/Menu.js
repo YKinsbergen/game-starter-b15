@@ -1,9 +1,10 @@
 import * as React from 'react'
+import {connect} from 'react-redux'
 
 // This component renders the menu that shows up after a unit encounters an enemy
 // The end turn function returns updateGame2 which updates the games board
 // And ends the turn
-export default class Menu extends React.Component {
+class Menu extends React.Component {
     render() {
         const fireEnemy = () => { 
             const props = this.props
@@ -12,51 +13,66 @@ export default class Menu extends React.Component {
             const below = props.row+1
             const left = props.cell-1
             const right = props.cell+1
-
-            let se = []
+            let alreadyFired = false
+            let ids = []
             
             props.board.map((row, rowIndex) => {    
                 if(above == rowIndex) {
                     if(row[props.cell] !== null && row[props.cell] !== undefined) {
-                        const elem = document.getElementById(`${rowIndex}-${props.cell}`)
-                        elem.style.backgroundColor = 'red'
-                        se.push(row[props.cell])
+                        // const elem = document.getElementById(`${rowIndex}-${props.cell}`)
+                        // elem.addEventListener("click", function(){
+                        //     if(!alreadyFired) {
+                        //         console.log(se)
+                        //         alreadyFired = true
+                        //     }
+                        // })
+                        // elem.style.backgroundColor = 'red'
+                        ids.push(`${rowIndex}-${props.cell}`)
                     }
                 }
                 if(below == rowIndex) {
                     if(row[props.cell] !== null && row[props.cell] !== undefined) {
-                        const elem = document.getElementById(`${rowIndex}-${props.cell}`)
-                        elem.style.backgroundColor = 'red'
-                        se.push(row[props.cell])
+                        
+                        ids.push(`${rowIndex}-${props.cell}`)
                     }
                 }
                 if(rowIndex == props.row) {
                     row.map((cell, cellIndex) => {
                         if(left == cellIndex) {
                             if(cell !== null && cell !== undefined) {
-                                const elem = document.getElementById(`${rowIndex}-${cellIndex}`)
-                                elem.style.backgroundColor = 'red'
-                                se.push(cell)
+                                
+                                ids.push(`${rowIndex}-${cellIndex}`)
                             }
                         }
                         if(right == cellIndex) {
                             if(cell !== null && cell !== undefined) {
-                                const elem = document.getElementById(`${rowIndex}-${cellIndex}`)
-                                elem.style.backgroundColor = 'red'
-                                se.push(cell)
+                               
+                                ids.push(`${rowIndex}-${cellIndex}`)
                             }
                         }
                     })
                 }
             })
-            console.log(se)
-            console.log("break")
+
+            ids.map(id => {
+                const elem = document.getElementById(id)
+                elem.addEventListener("click", function(){
+                    if(!alreadyFired) {
+                        props.ohm(id)
+                        alreadyFired = true
+                    }
+                })
+                elem.style.backgroundColor = 'red'
+            })
+            console.log(ids)
+
         }
         return (
             <div>
+                <div id="sese"></div>
                 {this.props.showMenu && 
                 <div>
-                    <button onClick={() => {fireEnemy()}}>Fire</button>
+                    <button onClick={fireEnemy}>Fire</button>
                     <button onClick={() => (
                         this.props.toggleMenu(),
                         this.props.endTurn(this.props.gameId, this.props.board) 
@@ -68,3 +84,5 @@ export default class Menu extends React.Component {
         )
     }
 }
+
+export default connect(null)(Menu)
