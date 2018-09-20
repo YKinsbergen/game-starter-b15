@@ -9,6 +9,8 @@ import Board from './Board'
 import Menu from './Menu'
 import './GameDetails.css'
 
+// new commit
+
 class GameDetails extends PureComponent {
   constructor(props) {
     super(props)
