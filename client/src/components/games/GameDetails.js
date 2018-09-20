@@ -533,6 +533,15 @@ class GameDetails extends PureComponent {
   } 
 }
 
+  ohm = (ids) => {
+    const idsArr = ids.split('-')
+    const row = idsArr[0]
+    const cell = idsArr[1]
+    const unitToHit = this.props.game.board[row][cell]
+    unitToHit.health = unitToHit.health - 5
+
+    this.props.updateGame2(this.props.game.id, this.props.game.board)
+  }
 
   render() {
     const {game, users, authenticated, userId} = this.props
@@ -554,7 +563,7 @@ class GameDetails extends PureComponent {
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
-      <Menu showMenu={this.state.showMenu} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
+      <Menu showMenu={this.state.showMenu} ohm={this.ohm} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
 
       {
         game.status === 'started' &&
