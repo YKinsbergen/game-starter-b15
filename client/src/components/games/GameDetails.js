@@ -8,7 +8,9 @@ import Paper from 'material-ui/Paper'
 import Board from './Board'
 import Menu from './Menu'
 import MenuWithoutFire from './MenuWithoutFire'
+import MenuGetPowerUpDamage from './MenuGetPowerUpDamage';
 import './GameDetails.css'
+import MenuGetPowerUpHealth from './MenuGetPowerUpHealth';
 
 
 class GameDetails extends PureComponent {
@@ -21,14 +23,21 @@ class GameDetails extends PureComponent {
       board: '',
       showMenu: false,
       showMenuWithoutFire: false,
-      showMenuPowerUp: false,
+      showMenuPowerUpDamage: false,
+      showMenuPowerUpHealth: false,
       rowCanFire: -1,
-      cellCanFire: -1
+      cellCanFire: -1,
+      rowToGetPowerUp: -1,
+      cellToGetPowerUp: -1,
     }
     this.toggleMenu = this.toggleMenu.bind(this)
     this.toggleMenuFalse = this.toggleMenuFalse.bind(this)
     this.toggleMenuWithoutFire = this.toggleMenuWithoutFire.bind(this)
     this.toggleMenuWithoutFireFalse = this.toggleMenuWithoutFireFalse.bind(this)
+    this.toggleMenuPowerUpDamage = this.toggleMenuPowerUpDamage.bind(this)
+    this.toggleMenuPowerUpDamageFalse = this.toggleMenuPowerUpDamageFalse.bind(this)
+    this.toggleMenuPowerUpHealth = this.toggleMenuPowerUpHealth.bind(this)
+    this.toggleMenuPowerUpHealthFalse = this.toggleMenuPowerUpHealthFalse.bind(this)
     this.setStateBack = this.setStateBack.bind(this)
   }
 
@@ -50,16 +59,24 @@ class GameDetails extends PureComponent {
     this.setState({ showMenuWithoutFire: true })
     console.log('ShowmenuWithoutFire' + this.state.showMenuWithoutFire, this.state.board, this.state.gameId)
   }
-
   toggleMenuWithoutFireFalse = () => {
     this.setState({ showMenuWithoutFire: false })
   }
 
-  toggleMenuPowerUp = () => {
-    this.setState({ showMenuWithoutFire: true })
+  toggleMenuPowerUpDamage = () => {
+    this.setState({ showMenuPowerUpDamage: true })
+    console.log('Menu damage toggled')
   }
-  toggleMenuPowerUpFalse = () => {
-    this.setState({ showMenuWithoutFire: false })
+  toggleMenuPowerUpDamageFalse = () => {
+    this.setState({ showMenuPowerUpDamage: false })
+  }
+
+  toggleMenuPowerUpHealth = () => {
+    this.setState({ showMenuPowerUpHealth: true })
+    console.log('Menu health toggled')
+  }
+  toggleMenuPowerUpHealthFalse = () => {
+    this.setState({ showMenuPowerUpHealth: false })
   }
 
   componentWillMount() {
@@ -94,7 +111,25 @@ class GameDetails extends PureComponent {
     if (toRow === 0 && toCell === 0) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
-        if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+        if (game.board[toRow][toCell+1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
+        else if (game.board[toRow][toCell+1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
+        else if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
             gameId: game.id,
@@ -121,6 +156,24 @@ class GameDetails extends PureComponent {
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow+1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -151,6 +204,24 @@ class GameDetails extends PureComponent {
     else if (toRow === 0 && toCell === 12) {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell-1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -178,6 +249,24 @@ class GameDetails extends PureComponent {
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow+1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -208,6 +297,24 @@ class GameDetails extends PureComponent {
     else if (toRow === 6 && toCell === 0) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell+1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -235,6 +342,24 @@ class GameDetails extends PureComponent {
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -265,6 +390,24 @@ class GameDetails extends PureComponent {
     else if (toRow === 6 && toCell === 12) {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell-1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -292,6 +435,24 @@ class GameDetails extends PureComponent {
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -322,6 +483,24 @@ class GameDetails extends PureComponent {
     else if (toRow === 0 && (toCell !== 0 && toCell !== 12)) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell+1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -349,6 +528,24 @@ class GameDetails extends PureComponent {
       }
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell-1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -376,6 +573,24 @@ class GameDetails extends PureComponent {
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow+1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -406,6 +621,24 @@ class GameDetails extends PureComponent {
     else if (toRow === 6 && (toCell !== 0 && toCell !== 12)) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell+1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -433,6 +666,24 @@ class GameDetails extends PureComponent {
       }
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell-1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -460,6 +711,24 @@ class GameDetails extends PureComponent {
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -490,6 +759,24 @@ class GameDetails extends PureComponent {
     else if (toCell === 0 && (toRow !== 0 && toRow !== 6)) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell+1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -517,6 +804,24 @@ class GameDetails extends PureComponent {
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -544,6 +849,24 @@ class GameDetails extends PureComponent {
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow+1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -574,6 +897,24 @@ class GameDetails extends PureComponent {
     else if (toCell === 12 && (toRow !== 0 && toRow !== 6)) {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell-1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -601,6 +942,24 @@ class GameDetails extends PureComponent {
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -628,6 +987,24 @@ class GameDetails extends PureComponent {
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow+1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -658,6 +1035,24 @@ class GameDetails extends PureComponent {
     else {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
+        if (game.board[toRow][toCell-1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell-1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
           this.toggleMenu()
           this.setState({
@@ -685,6 +1080,24 @@ class GameDetails extends PureComponent {
       }
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
+        if (game.board[toRow][toCell+1].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow][toCell+1].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -712,6 +1125,42 @@ class GameDetails extends PureComponent {
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
+        if (game.board[toRow-1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow-1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -739,6 +1188,24 @@ class GameDetails extends PureComponent {
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
+        if (game.board[toRow+1][toCell].name.includes('Damage')) {
+          this.toggleMenuPowerUpDamage()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell
+          })
+        }
+        else if (game.board[toRow+1][toCell].name.includes('Health')) {
+          this.toggleMenuPowerUpHealth()
+          this.setState({
+            gameId: game.id,
+            board: game.board,
+            rowToGetPowerUp: toRow,
+            cellToGetPowerUp: toCell,
+          })
+        }
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
            this.toggleMenu()
           this.setState({
@@ -789,7 +1256,7 @@ class GameDetails extends PureComponent {
       cellCanFire: toCell
     }), setTimeout(() => {
       this.check(toRow, toCell)
-    }, 300) 
+    }, 500) 
   } 
 }
 
@@ -803,6 +1270,7 @@ fire = (ids, unitFiring) => {
   const cell = idsArr[1]
   const unitToHit = this.props.game.board[row][cell]
   const unitFiringHealth = this.props.game.board[unitFiring[0]][unitFiring[1]].health
+  const unitFiringBaseDamage = this.props.game.board[unitFiring[0]][unitFiring[1]].baseDmg
   const luckFactor = () => {
     return Math.floor((Math.random() * (3)) + 9)
     }
@@ -815,12 +1283,33 @@ fire = (ids, unitFiring) => {
       }
     }
     const calculateDamage = (health) => {
-      return (Math.round( (60 * luckFactor()) /100 ) * ( calculateHpGain(health) ) )
+      return (Math.round( (unitFiringBaseDamage * luckFactor()) /100 ) * ( calculateHpGain(health) ) )
     }
     // Damage logic
     const calculateHP = (health) => {
     const damage = calculateDamage(health)
-    if (damage >= 85) {
+    if (damage >= 155) {
+      return (unitToHit.health = unitToHit.health - 20)
+    }
+    else if (damage >= 145 && damage <= 154) {
+      return (unitToHit.health = unitToHit.health - 15)
+    }
+    else if (damage >= 135 && damage <= 144) {
+      return (unitToHit.health = unitToHit.health - 14)
+    }
+    else if (damage >= 125 && damage <= 134) {
+      return (unitToHit.health = unitToHit.health - 13)
+    }
+    else if (damage >= 115 && damage <= 124) {
+      return (unitToHit.health = unitToHit.health - 12)
+    }
+    else if (damage >= 105 && damage <= 114) {
+      return (unitToHit.health = unitToHit.health - 11)
+    }
+    else if (damage >= 95 && damage <= 104) {
+      return (unitToHit.health = unitToHit.health - 10)
+    }
+    else if (damage >= 85 && damage <= 94) {
       return (unitToHit.health = unitToHit.health - 9)
     }
     else if (damage >= 75 && damage <= 84) {
@@ -848,7 +1337,6 @@ fire = (ids, unitFiring) => {
       return (unitToHit.health = unitToHit.health - 1)
     }
     else {
-      console.log('calculating hp failed, re-running function', 'Health of unit to hit:' + unitToHit.health, 'Health of current unit:' + unitFiringHealth, 'calculated damage:' + calculateDamage(unitToHit.health))
       calculateHP(unitFiringHealth)
     }
   }
@@ -929,6 +1417,35 @@ fireEnemy = () => {
   this.setStateBack()
 }
 
+getPowerUpHealth = () => {
+  const row = this.state.rowToGetPowerUp
+  const cell = this.state.cellToGetPowerUp
+  const increaseHealth = () => {
+    this.props.game.board[row][cell].health = this.props.game.board[row][cell].health + 5
+  }
+  this.setState({
+    rowToGetPowerUp: -1,
+    cellToGetPowerUp: -1
+  })
+  increaseHealth(),
+  console.log('row:' + row, 'cell:' + cell, this.props.game.board[row][cell])
+  this.updateWithHealth(this.props.game.id, this.props.game.board)
+}
+
+getPowerUpDamage = () => {
+  const row = this.state.rowToGetPowerUp
+  const cell = this.state.cellToGetPowerUp
+  const increaseBaseDamage = () => {
+    this.props.game.board[row][cell].baseDmg = this.props.game.board[row][cell].baseDmg + 40
+  }
+  this.setState({
+    rowToGetPowerUp: -1,
+    cellToGetPowerUp: -1
+  })
+  increaseBaseDamage(),
+  console.log('row:' + row, 'cell:' + cell, this.props.game.board[row][cell])
+  this.updateWithHealth(this.props.game.id, this.props.game.board)
+}
 
   render() {
     const {game, users, authenticated, userId} = this.props
@@ -952,6 +1469,8 @@ fireEnemy = () => {
       <p>Status: {game.status}</p>
       <Menu showMenu={this.state.showMenu} fireEnemy={this.fireEnemy} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu} toggleMenuFalse={this.toggleMenuFalse}/>
       <MenuWithoutFire setStateBack={this.setStateBack} showMenuWithoutFire={this.state.showMenuWithoutFire} toggleMenuWithoutFire={this.toggleMenuWithoutFire} endTurn={this.props.updateGame2} board={this.state.board} gameId={this.state.gameId} toggleMenuWithoutFireFalse={this.toggleMenuWithoutFireFalse} toggleMenuFalse={this.toggleMenuFalse}/>
+      <MenuGetPowerUpDamage getPowerUpDamage={this.getPowerUpDamage} setStateBack={this.setStateBack} endTurn={this.props.updateGame2} showMenuPowerUpDamage={this.state.showMenuPowerUpDamage} toggleMenuPowerUpDamage={this.toggleMenuPowerUpDamage} toggleMenuPowerUpDamageFalse={this.toggleMenuPowerUpDamageFalse} board={this.state.board} gameId={this.state.gameId} toggleMenuFalse={this.toggleMenuFalse}/>
+      <MenuGetPowerUpHealth getPowerUpHealth={this.getPowerUpHealth} setStateBack={this.setStateBack} endTurn={this.props.updateGame2} showMenuPowerUpHealth={this.state.showMenuPowerUpHealth} toggleMenuPowerUpHealth={this.toggleMenuPowerUpHealth} toggleMenuPowerUpHealthFalse={this.toggleMenuPowerUpHealthFalse} board={this.state.board} gameId={this.state.gameId} toggleMenuFalse={this.toggleMenuFalse}/>
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
