@@ -530,7 +530,7 @@ class GameDetails extends PureComponent {
       cellCanFire: toCell
     }), setTimeout(() => {
       this.check(toRow, toCell)
-    }, 400) 
+    }, 300) 
   } 
 }
 
@@ -656,7 +656,7 @@ fireEnemy = () => {
           if(!alreadyFired) {
               fire(id, unitFiring)
               alreadyFired = true
-              elem.style.backgroundColor = 'transparent'
+              elem.style.backgroundColor = 'rgb(237, 237, 237)'
           }
       })
     elem.id = 'unit-id'
