@@ -524,8 +524,8 @@ class GameDetails extends PureComponent {
       // Do a 'soft' update of the game, not ending the turn
     updateGame1(game.id, board)
     this.setState({
-      theRow: -1, 
-      theCell: -1,
+      theRow: 70, 
+      theCell: 70,
       rowCanFire: toRow,
       cellCanFire: toCell
     }), setTimeout(() => {
@@ -650,17 +650,25 @@ fireEnemy = () => {
       }
   })
   ids.map(id => {
-      const elem = document.getElementById(id)
-      const fire = this.fire
-      elem.addEventListener("click", function(){
-          if(!alreadyFired) {
-              fire(id, unitFiring)
-              alreadyFired = true
-              elem.style.backgroundColor = 'rgb(237, 237, 237)'
-          }
-      })
-    elem.id = 'unit-id'
+    const elem = document.getElementById(id)
+    const fire = this.fire
+    elem.addEventListener("click", function(){
+        if(!alreadyFired) {
+            fire(id, unitFiring)
+            alreadyFired = true
+            const elemsWithClass = document.getElementsByClassName('fireEnemyHover')
+            const elems = [...elemsWithClass]
+            elems.map(elem => {
+              elem.classList.remove('fireEnemyHover')
+            })
+        }
+    })
+    elem.classList.add('fireEnemyHover')
+  }), this.setState({
+    theRow: -1,
+    theCell: -1
   })
+  this.toggleMenu()
 }
 
 
