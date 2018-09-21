@@ -7,14 +7,14 @@
 
 #unit-id {
   border-radius: 3px;
-  background-color: yellow;
+  background-color: rgb(255, 225, 0);
   transition: 0.2s;
 }
 
 #unit-id:hover {
-  background-color: #F78E37;
+  background-color: rgb(247, 92, 36);
   border-radius: 5px;
-  border-color: grey;
+  border-color: black;
   cursor: pointer;
   transition: 0.2s;
 }
