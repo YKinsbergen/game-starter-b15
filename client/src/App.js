@@ -7,7 +7,6 @@ import GameDetails from './components/games/GameDetails'
 import LogoutPage from './components/logout/LogoutPage'
 import './App.css'
 import TopBar from './components/layout/TopBar'
-import {baseUrl} from './constants'
 
 // <Route exact path="/signup" component={SignupPage} />
 // <Route exact path="/games" component={GamesList} />
@@ -15,7 +14,6 @@ import {baseUrl} from './constants'
 
 class App extends Component {
   render() {
-    console.log(baseUrl)
     return (
       <Router>
         <div>
