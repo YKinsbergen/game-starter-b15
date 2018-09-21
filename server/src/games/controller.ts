@@ -4,7 +4,7 @@ import {
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import {finished} from './logic'
+import {calculateWinner, finished} from './logic'
 // import { Validate } from 'class-validator'
 import {io} from '../index'
 
@@ -93,11 +93,6 @@ export default class GameController {
     //   throw new BadRequestError(`Invalid move`)
     // }    
 
-    // const winner = calculateWinner(update.board)
-    // if (winner) {
-    //   game.winner = winner
-    //   game.status = 'finished'
-    // }
     else if (finished(update.board)) {
       game.status = 'finished'
     }
@@ -132,12 +127,10 @@ export default class GameController {
     //   throw new BadRequestError(`Invalid move`)
     // }    
 
-    // const winner = calculateWinner(update.board)
-    // if (winner) {
-    //   game.winner = winner
-    //   game.status = 'finished'
-    // }
-    else if (finished(update.board)) {
+    
+    const winner = calculateWinner(update.board)
+    if (winner) {
+      game.winner = winner
       game.status = 'finished'
     }
     else {
