@@ -27,14 +27,15 @@ export type Units = [Unit, Unit, Unit]
 export type UnitsRedBlue = {red:Units, blue:Units}
 
 export type Row = [ Unit | Base | null, Unit | Base | null, Unit | Base | null, 
+  Unit | Base | null, Unit | Base | null, Unit | Base | null, Unit | Base | null, Unit | Base | null, 
   Unit | Base | null, Unit | Base | null, Unit | Base | null ]
 export type Board = [ Row, Row, Row, Row, Row, Row]
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null, null, null, null]
-const row1: Row = [{name: 'john',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, {name: 'jane',team: 'blue',health: 10,type: 'infantry'}]
-const row2: Row = [{name:'HQ', health:20, team:'red'}, {name: 'john',team: 'red',health: 10,type: 'infantry'}, null, null, {name: 'jane',team: 'blue',health: 10,type: 'infantry'}, {name:'HQ', health:20, team:'blue'}]
+const emptyRow: Row = [null, null, null, null, null, null, null, null, null, null, null]
+const row1: Row = [{name: 'john',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, null, null, {name: 'jane',team: 'blue',health: 10,type: 'infantry'}]
+const row2: Row = [{name:'HQ', health:20, team:'red'}, {name: 'john',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, {name: 'jane',team: 'blue',health: 10,type: 'infantry'}, {name:'HQ', health:20, team:'blue'}]
 const emptyBoard: Board = [ emptyRow, row1, row2, row1, emptyRow, emptyRow ]
 
 @Entity()
