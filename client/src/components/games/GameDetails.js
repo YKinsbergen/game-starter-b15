@@ -17,6 +17,8 @@ class GameDetails extends PureComponent {
     this.state = {
       theRow: -1,
       theCell: -1,
+      prevRow: -1,
+      prevCell: -1,
       gameId: 0,
       board: '',
       showMenu: false,
@@ -40,7 +42,6 @@ class GameDetails extends PureComponent {
   }
   toggleMenu = () => {
     this.setState({ showMenu: true });
-    console.log('Showmenu' + this.state.showMenu, this.state.board, this.state.gameId)
   }
   toggleMenuFalse = () => {
     this.setState({ showMenu: false });
@@ -48,7 +49,6 @@ class GameDetails extends PureComponent {
 
   toggleMenuWithoutFire = () => {
     this.setState({ showMenuWithoutFire: true })
-    console.log('ShowmenuWithoutFire' + this.state.showMenuWithoutFire, this.state.board, this.state.gameId)
   }
 
   toggleMenuWithoutFireFalse = () => {
@@ -768,28 +768,37 @@ class GameDetails extends PureComponent {
 }
 
   // Make a move with the indexes from 'selectUnit()'
-  makeMove = (toRow, toCell) => {
-    const {game, updateGame1, userId} = this.props
+  makeMove = (toRow, toCell, prevRow, prevCell) => {
+    const {game, updateGame1, userId} = this.props;
+    console.log(toRow,toCell)
     const player = game.players.find(p => p.userId === userId)
     if (game.board[toRow][toCell] === null && game.turn === player.symbol) {
-    const board = game.board.map(
-      (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.board[this.state.theRow][this.state.theCell]
-        else if (rowIndex === this.state.theRow 
-          && cellIndex === this.state.theCell) return null
-        else return cell
-      })
-      )
-      // Do a 'soft' update of the game, not ending the turn
-    updateGame1(game.id, board)
-    this.setState({
-      theRow: 70, 
-      theCell: 70,
-      rowCanFire: toRow,
-      cellCanFire: toCell
-    }), setTimeout(() => {
-      this.check(toRow, toCell)
-    }, 300) 
+      if(toRow - prevRow < -3 || toRow - prevRow > 3) {
+        console.log('cant move that far')
+      }
+      if(toCell - prevCell < -3 || toCell - prevCell > 3) {
+        console.log('cant move that far')
+      } else {
+
+        const board = game.board.map(
+          (row, rowIndex) => row.map((cell, cellIndex) => {
+            if (rowIndex === toRow && cellIndex === toCell) return game.board[this.state.theRow][this.state.theCell]
+            else if (rowIndex === this.state.theRow 
+              && cellIndex === this.state.theCell) return null
+            else return cell
+          })
+          )
+          // Do a 'soft' update of the game, not ending the turn
+        updateGame1(game.id, board)
+        this.setState({
+          theRow: 70, 
+          theCell: 70,
+          rowCanFire: toRow,
+          cellCanFire: toCell
+        }), setTimeout(() => {
+          this.check(toRow, toCell)
+        }, 300)
+      } 
   } 
 }
 
