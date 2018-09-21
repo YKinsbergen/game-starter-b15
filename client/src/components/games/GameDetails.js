@@ -28,8 +28,15 @@ class GameDetails extends PureComponent {
     this.toggleMenuFalse = this.toggleMenuFalse.bind(this)
     this.toggleMenuWithoutFire = this.toggleMenuWithoutFire.bind(this)
     this.toggleMenuWithoutFireFalse = this.toggleMenuWithoutFireFalse.bind(this)
+    this.setStateBack = this.setStateBack.bind(this)
   }
 
+  setStateBack = () => {
+    this.setState({
+      theRow: -1,
+      theCell: -1
+    })
+  }
   toggleMenu = () => {
     this.setState({ showMenu: true });
     console.log('Showmenu' + this.state.showMenu, this.state.board, this.state.gameId)
@@ -768,8 +775,8 @@ class GameDetails extends PureComponent {
       // Do a 'soft' update of the game, not ending the turn
     updateGame1(game.id, board)
     this.setState({
-      theRow: -1, 
-      theCell: -1,
+      theRow: 70, 
+      theCell: 70,
       rowCanFire: toRow,
       cellCanFire: toCell
     }), setTimeout(() => {
@@ -909,11 +916,9 @@ fireEnemy = () => {
     })
     elem.classList.add('fireEnemyHover')
   })
-  if(ids.length < 1) {
-    this.props.updateGame2(props.id, props.board)
-  }
   this.toggleMenuFalse()
   this.toggleMenuWithoutFireFalse()
+  this.setStateBack()
 }
 
 
@@ -938,7 +943,7 @@ fireEnemy = () => {
 
       <p>Status: {game.status}</p>
       <Menu showMenu={this.state.showMenu} fireEnemy={this.fireEnemy} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu} toggleMenuFalse={this.toggleMenuFalse}/>
-      <MenuWithoutFire showMenuWithoutFire={this.state.showMenuWithoutFire} toggleMenuWithoutFire={this.toggleMenuWithoutFire} endTurn={this.props.updateGame2} board={this.state.board} gameId={this.state.gameId} toggleMenuWithoutFireFalse={this.toggleMenuWithoutFireFalse} toggleMenuFalse={this.toggleMenuFalse}/>
+      <MenuWithoutFire setStateBack={this.setStateBack} showMenuWithoutFire={this.state.showMenuWithoutFire} toggleMenuWithoutFire={this.toggleMenuWithoutFire} endTurn={this.props.updateGame2} board={this.state.board} gameId={this.state.gameId} toggleMenuWithoutFireFalse={this.toggleMenuWithoutFireFalse} toggleMenuFalse={this.toggleMenuFalse}/>
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&

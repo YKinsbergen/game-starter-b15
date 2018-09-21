@@ -11,6 +11,7 @@ return (
             <button onClick={() => (
                 this.props.toggleMenuWithoutFireFalse(),
                 this.props.toggleMenuFalse(),
+                this.props.setStateBack(),
                 this.props.endTurn(this.props.gameId, this.props.board) 
                 )}>
                 End turn
