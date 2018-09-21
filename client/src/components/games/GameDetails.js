@@ -140,7 +140,7 @@ class GameDetails extends PureComponent {
       } 
     }
     // If top right corner
-    else if (toRow === 0 && toCell === 5) {
+    else if (toRow === 0 && toCell === 10) {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
@@ -254,7 +254,7 @@ class GameDetails extends PureComponent {
       }
     }
     // If bottom right corner
-    else if (toRow === 5 && toCell === 5) {
+    else if (toRow === 5 && toCell === 10) {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
@@ -311,7 +311,7 @@ class GameDetails extends PureComponent {
       } 
     }
     // If top row, but not in a corner 
-    else if (toRow === 0 && (toCell !== 0 && toCell !== 5)) {
+    else if (toRow === 0 && (toCell !== 0 && toCell !== 10)) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
@@ -395,7 +395,7 @@ class GameDetails extends PureComponent {
       }
     }
     // If bottom row, but not in a corner
-    else if (toRow === 5 && (toCell !== 0 && toCell !== 5)) {
+    else if (toRow === 5 && (toCell !== 0 && toCell !== 10)) {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
@@ -563,7 +563,7 @@ class GameDetails extends PureComponent {
       }
     }
     // If left column, but not in corner
-    else if (toCell === 5 && (toRow !== 0 && toRow !== 5)) {
+    else if (toCell === 10 && (toRow !== 0 && toRow !== 5)) {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
