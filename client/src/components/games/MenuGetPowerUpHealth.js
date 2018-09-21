@@ -12,6 +12,7 @@ return (
                 this.props.getPowerUpHealth(),
                 this.props.toggleMenuPowerUpHealthFalse(),
                 this.props.toggleMenuFalse(),
+                this.props.toggleMenuWithoutFireFalse(),
                 this.props.setStateBack())}>
                 Get HP power-up
             </button>

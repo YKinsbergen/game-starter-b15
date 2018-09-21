@@ -12,6 +12,7 @@ return (
                 this.props.getPowerUpDamage(),
                 this.props.toggleMenuPowerUpDamageFalse(),
                 this.props.toggleMenuFalse(),
+                this.props.toggleMenuWithoutFireFalse(),
                 this.props.setStateBack())}>
                 Get damage power-up
             </button>
