@@ -62,12 +62,6 @@ class Menu extends React.Component {
                 {this.props.showMenu && 
                 <div>
                     <button onClick={this.props.fireEnemy}>Fire</button>
-                    <button onClick={() => (
-                        this.props.toggleMenu(),
-                        this.props.endTurn(this.props.gameId, this.props.board) 
-                        )}>
-                        End turn
-                    </button>
                 </div>}
             </div>
         )

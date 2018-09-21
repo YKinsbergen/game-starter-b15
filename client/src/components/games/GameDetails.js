@@ -7,6 +7,7 @@ import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
 import Board from './Board'
 import Menu from './Menu'
+import MenuWithoutFire from './MenuWithoutFire'
 import './GameDetails.css'
 
 
@@ -19,14 +20,31 @@ class GameDetails extends PureComponent {
       gameId: 0,
       board: '',
       showMenu: false,
+      showMenuWithoutFire: false,
       rowCanFire: -1,
       cellCanFire: -1
     }
     this.toggleMenu = this.toggleMenu.bind(this)
+    this.toggleMenuFalse = this.toggleMenuFalse.bind(this)
+    this.toggleMenuWithoutFire = this.toggleMenuWithoutFire.bind(this)
+    this.toggleMenuWithoutFireFalse = this.toggleMenuWithoutFireFalse.bind(this)
   }
 
-  toggleMenu = function() {
-    this.setState({ showMenu: !this.state.showMenu });
+  toggleMenu = () => {
+    this.setState({ showMenu: true });
+    console.log('Showmenu' + this.state.showMenu, this.state.board, this.state.gameId)
+  }
+  toggleMenuFalse = () => {
+    this.setState({ showMenu: false });
+  }
+
+  toggleMenuWithoutFire = () => {
+    this.setState({ showMenuWithoutFire: true })
+    console.log('ShowmenuWithoutFire' + this.state.showMenuWithoutFire, this.state.board, this.state.gameId)
+  }
+
+  toggleMenuWithoutFireFalse = () => {
+    this.setState({ showMenuWithoutFire: false })
   }
 
   componentWillMount() {
@@ -70,7 +88,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy right of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -79,7 +97,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -89,13 +107,28 @@ class GameDetails extends PureComponent {
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy below you')
         } 
         else {
+          this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit below you')
         }
       }
       else {
+        this.toggleMenuWithoutFire()
+        this.setState({
+          gameId: game.id,
+          board: game.board
+        })
         console.log('No unit below you')
       } 
     }
@@ -112,7 +145,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy left of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -121,7 +154,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -131,13 +164,28 @@ class GameDetails extends PureComponent {
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy below you')
         } 
         else {
+          this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit below you')
         }
       }
       else {
+        this.toggleMenuWithoutFire()
+        this.setState({
+          gameId: game.id,
+          board: game.board
+        })
         console.log('No unit below you')
       }
     }
@@ -154,7 +202,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy right of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -163,7 +211,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -173,13 +221,28 @@ class GameDetails extends PureComponent {
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy above you')
         } 
         else {
+          this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit above you')
         }
       }
       else {
+        this.toggleMenuWithoutFire()
+        this.setState({
+          gameId: game.id,
+          board: game.board
+        })
         console.log('No unit above you')
       }
     }
@@ -196,7 +259,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy left of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -205,7 +268,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -215,13 +278,28 @@ class GameDetails extends PureComponent {
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy above you')
         } 
         else {
+          this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit above you')
         }
       }
       else {
+        this.toggleMenuWithoutFire()
+        this.setState({
+          gameId: game.id,
+          board: game.board
+        })
         console.log('No unit above you')
       } 
     }
@@ -238,7 +316,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy right of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -247,7 +325,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -257,25 +335,55 @@ class GameDetails extends PureComponent {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+          this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy left of you')
         } 
         else {
+          this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit left of you')
         }
       } 
       else {
+        this.toggleMenuWithoutFire()
+        this.setState({
+          gameId: game.id,
+          board: game.board
+        })
         console.log('No unit to your left')
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy below you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit below you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit below you')
       }
     }
@@ -292,7 +400,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy right of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -301,7 +409,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -311,25 +419,55 @@ class GameDetails extends PureComponent {
       // Check left
       if (game.board[toRow][toCell-1] !== null && game.board[toRow][toCell-1] !== undefined) {
         if (game.board[toRow][toCell-1].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy left of you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit left of you')
         }
       } 
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit to your left')
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy above you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit above you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit above you')
       }
     } 
@@ -346,7 +484,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy right of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -355,7 +493,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -365,25 +503,55 @@ class GameDetails extends PureComponent {
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy above you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit above you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit above you')
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy below you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit below you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit below you')
       }
     }
@@ -400,7 +568,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy left of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -409,7 +577,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -419,25 +587,55 @@ class GameDetails extends PureComponent {
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy above you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit above you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit above you')
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy below you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit below you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit below you')
       }
     } 
@@ -454,7 +652,7 @@ class GameDetails extends PureComponent {
           console.log('Enemy left of you')
         } 
         else {
-          this.toggleMenu()
+          this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -463,7 +661,7 @@ class GameDetails extends PureComponent {
         }
       } 
       else {
-        this.toggleMenu()
+        this.toggleMenuWithoutFire()
           this.setState({
             gameId: game.id,
             board: game.board
@@ -473,37 +671,82 @@ class GameDetails extends PureComponent {
       // Check right
       if (game.board[toRow][toCell+1] !== null && game.board[toRow][toCell+1] !== undefined) {
         if (game.board[toRow][toCell+1].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy right of you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit right of you')
         }
       } 
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit to your right')
       }
       // Check up
       if (game.board[toRow-1][toCell] !== null && game.board[toRow-1][toCell] !== undefined) {
         if (game.board[toRow-1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy above you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit above you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit above you')
       }
       // Check down
       if (game.board[toRow+1][toCell] !== null && game.board[toRow+1][toCell] !== undefined) {
         if (game.board[toRow+1][toCell].team !== game.board[toRow][toCell].team) {
+           this.toggleMenu()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Enemy below you')
         } 
         else {
+           this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
           console.log('Friendly unit below you')
         }
       }
       else {
+         this.toggleMenuWithoutFire()
+          this.setState({
+            gameId: game.id,
+            board: game.board
+          })
         console.log('No unit below you')
       }
   }
@@ -669,7 +912,8 @@ fireEnemy = () => {
   if(ids.length < 1) {
     this.props.updateGame2(props.id, props.board)
   }
-  this.toggleMenu()
+  this.toggleMenuFalse()
+  this.toggleMenuWithoutFireFalse()
 }
 
 
@@ -693,8 +937,8 @@ fireEnemy = () => {
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
-      <Menu showMenu={this.state.showMenu} fireEnemy={this.fireEnemy} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu}/>
-
+      <Menu showMenu={this.state.showMenu} fireEnemy={this.fireEnemy} board={this.state.board} cell={this.state.cellCanFire} row={this.state.rowCanFire} gameId={this.state.gameId} endTurn={this.props.updateGame2} toggleMenu={this.toggleMenu} toggleMenuFalse={this.toggleMenuFalse}/>
+      <MenuWithoutFire showMenuWithoutFire={this.state.showMenuWithoutFire} toggleMenuWithoutFire={this.toggleMenuWithoutFire} endTurn={this.props.updateGame2} board={this.state.board} gameId={this.state.gameId} toggleMenuWithoutFireFalse={this.toggleMenuWithoutFireFalse} toggleMenuFalse={this.toggleMenuFalse}/>
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
