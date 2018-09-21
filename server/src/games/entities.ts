@@ -2,19 +2,23 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 
 export type Symbol = 'red' | 'blue'
-export type Base = {name:'TankR' | 'TankB', health:20, team:'red' | 'blue'}
+export type Base = {name:'TankR' | 'TankB', health:20, team:'red' | 'blue', baseDmg: 60}
+export type damageUp = {name: 'Damage+', value: 40}
+export type healthUp = {name: 'Health+', value: 5}
 
 // export type Team = 'red' | 'blue'
 export type Unit = {
   name: 'John',
   team: 'red',
   health: 10,
-  type: 'infantry' | 'vehicle' | 'bazooka'
+  type: 'infantry' | 'vehicle' | 'bazooka',
+  baseDmg: 60
 } | {
   name: 'Jane',
   team: 'blue',
   health: 10,
-  type: 'infantry' | 'vehicle' | 'bazooka'
+  type: 'infantry' | 'vehicle' | 'bazooka',
+  baseDmg: 60
 }
 
 // const baseUnit: Unit = {
@@ -26,17 +30,35 @@ export type Unit = {
 export type Units = [Unit, Unit, Unit]
 export type UnitsRedBlue = {red:Units, blue:Units}
 
-export type Row = [ Unit | Base | null, Unit | Base | null, Unit | Base | null, 
-  Unit | Base | null, Unit | Base | null, Unit | Base | null, Unit | Base | null, Unit | Base | null, 
-  Unit | Base | null, Unit | Base | null, Unit | Base | null ]
-export type Board = [ Row, Row, Row, Row, Row, Row]
+export type Row = [ Unit | Base | damageUp | healthUp | null,
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null, 
+  Unit | Base | damageUp | healthUp | null ]
+
+export type Board = [ Row, Row, Row, Row, Row, Row, Row]
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null, null, null, null, null, null, null, null, null]
-const row1: Row = [{name: 'John',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry'}]
-const row2: Row = [{name:'TankR', health:20, team:'red'}, {name: 'John',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry'}, {name:'TankB', health:20, team:'blue'}]
-const emptyBoard: Board = [ emptyRow, row1, row2, row1, emptyRow, emptyRow ]
+const emptyRow: Row = [null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+const rowTop: Row = [null, null, null, null, null, null, null, null, {name: 'Damage+', value: 40}, null, null, null, null]
+const rowBottom: Row = [null, null, null, null, {name: 'Damage+', value: 40}, null, null, null, null, null, null, null, null]
+
+const rowWithHpTop: Row = [{name: 'John',team: 'red',health: 10,type: 'infantry', baseDmg: 60}, null, null, null, null, {name: 'Health+', value: 5}, null, null, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry', baseDmg: 60}]
+const rowWithHpBottom: Row = [{name: 'John',team: 'red',health: 10,type: 'infantry', baseDmg: 60}, null, null, null, null, null, null, {name: 'Health+', value: 5}, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry', baseDmg: 60}]
+
+const rowMiddle: Row = [{name:'TankR', health:20, team:'red', baseDmg: 60}, {name: 'John',team: 'red',health: 10,type: 'infantry', baseDmg: 60}, null, null, null, null, null, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry', baseDmg: 60}, {name:'TankB', health:20, team:'blue', baseDmg: 60}]
+
+const emptyBoard: Board = [ emptyRow, rowTop, rowWithHpTop, rowMiddle, rowWithHpBottom, rowBottom, emptyRow ]
 
 @Entity()
 export class Game extends BaseEntity {
