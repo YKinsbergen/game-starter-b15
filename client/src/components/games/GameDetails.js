@@ -666,6 +666,9 @@ fireEnemy = () => {
     })
     elem.classList.add('fireEnemyHover')
   })
+  if(ids.length < 1) {
+    this.props.updateGame2(props.id, props.board)
+  }
   this.toggleMenu()
 }
 
