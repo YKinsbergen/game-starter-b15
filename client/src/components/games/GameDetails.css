@@ -2,5 +2,19 @@
   margin-top: 20px;
   margin: auto;
   padding: 20px;
-  width: 60%;
+  width: 65%;
+}
+
+.fireEnemyHover {
+  border-radius: 3px;
+  background-color: rgb(255, 225, 0);
+  transition: 0.2s;
+}
+
+.fireEnemyHover:hover {
+  background-color: rgb(247, 92, 36);
+  border-radius: 5px;
+  border-color: black;
+  cursor: pointer;
+  transition: 0.2s;
 }
