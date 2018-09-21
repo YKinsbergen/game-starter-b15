@@ -9,11 +9,10 @@ return (
         {this.props.showMenuPowerUpDamage && 
         <div>
             <button onClick={() => (
+                this.props.getPowerUpDamage(),
                 this.props.toggleMenuPowerUpDamageFalse(),
                 this.props.toggleMenuFalse(),
-                this.props.setStateBack(),
-                this.props.endTurn(this.props.gameId, this.props.board) 
-                )}>
+                this.props.setStateBack())}>
                 Get damage power-up
             </button>
         </div>}
