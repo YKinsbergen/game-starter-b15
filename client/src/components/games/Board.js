@@ -11,10 +11,11 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
         onClick={() => {
           if (theState.theRow < 0){
           return selectUnit(rowIndex, cellIndex) } 
-          else if (theState.theRow >= 0 && theState.theRow < 65) {
-          return makeMove(rowIndex, cellIndex) }
-          else if (theState.theRow > 69) {
-          return console.log('Can only move once.')
+          else if (theState.theRow >= 0 && theState.theRow < 69) {
+          return makeMove(rowIndex, cellIndex) 
+        }
+          else if (theState.theRow >= 71) {
+          return console.log('Can only move once')
           }
         }
         } 
@@ -28,14 +29,13 @@ const renderCel = (selectUnit, rowIndex, cellIndex, symbol, hasTurn, theState, m
         id={`${rowIndex}-${cellIndex}`}
         disabled={hasTurn}
         onClick={() => {
-          if (theState.theRow < 0) {
-            return selectUnit(rowIndex, cellIndex) 
-          } 
-          else if (theState.theRow >= 0 && theState.theRow < 65) {
-            return makeMove(rowIndex, cellIndex) 
+          if (theState.theRow < 0){
+          return selectUnit(rowIndex, cellIndex) } 
+          else if (theState.theRow >= 0 && theState.theRow < 69) {
+          return makeMove(rowIndex, cellIndex)
           }
-          else if (theState.theRow > 69) {
-            return console.log('Can only move once.')
+          else if (theState.theRow >= 70) {
+            return console.log('Can only move once')
           }
         }
         } 

@@ -33,19 +33,20 @@ class GameDetails extends PureComponent {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
-    }
+    } 
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
   
   // Select a unit
   selectUnit = (toRow, toCell) => {
-    const {game} = this.props
+    const {game, userId} = this.props
+    const player = game.players.find(p => p.userId === userId)
     if (game.board[toRow][toCell] === null) {
       return 
-    } else if (game.board[toRow][toCell].team !== game.turn) {
+    } else if (game.board[toRow][toCell].team !== game.turn || player.symbol !== game.board[toRow][toCell].team) {
       return
-    } else if (game.board[toRow][toCell].team === game.turn) {
+    } else if (game.board[toRow][toCell].team === game.turn && player.symbol === game.board[toRow][toCell].team) {
       return this.setState({
         theRow: toRow, 
         theCell: toCell
@@ -510,9 +511,9 @@ class GameDetails extends PureComponent {
 
   // Make a move with the indexes from 'selectUnit()'
   makeMove = (toRow, toCell) => {
-    const {game, updateGame1} = this.props
-
-    if (game.board[toRow][toCell] === null) {
+    const {game, updateGame1, userId} = this.props
+    const player = game.players.find(p => p.userId === userId)
+    if (game.board[toRow][toCell] === null && game.turn === player.symbol) {
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         if (rowIndex === toRow && cellIndex === toCell) return game.board[this.state.theRow][this.state.theCell]
@@ -524,8 +525,8 @@ class GameDetails extends PureComponent {
       // Do a 'soft' update of the game, not ending the turn
     updateGame1(game.id, board)
     this.setState({
-      theRow: 70, 
-      theCell: 70,
+      theRow: -1, 
+      theCell: -1,
       rowCanFire: toRow,
       cellCanFire: toCell
     }), setTimeout(() => {
@@ -664,9 +665,6 @@ fireEnemy = () => {
         }
     })
     elem.classList.add('fireEnemyHover')
-  }), this.setState({
-    theRow: -1,
-    theCell: -1
   })
   this.toggleMenu()
 }
