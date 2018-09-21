@@ -34,8 +34,8 @@ export type Board = [ Row, Row, Row, Row, Row, Row]
 type Status = 'pending' | 'started' | 'finished'
 
 const emptyRow: Row = [null, null, null, null, null, null, null, null, null, null, null]
-const row1: Row = [{name: 'John',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry'}]
-const row2: Row = [{name:'TankR', health:20, team:'red'}, {name: 'John',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, {name: 'Jane',team: 'blue',health: 10,type: 'infantry'}, {name:'TankB', health:20, team:'blue'}]
+const row1: Row = [{name: 'John',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, null, null, null]
+const row2: Row = [{name:'TankR', health:20, team:'red'}, {name: 'John',team: 'red',health: 10,type: 'infantry'}, null, null, null, null, null, null, null, null, {name:'TankB', health:20, team:'blue'}]
 const emptyBoard: Board = [ emptyRow, row1, row2, row1, emptyRow, emptyRow ]
 
 @Entity()
@@ -50,7 +50,7 @@ export class Game extends BaseEntity {
   @Column('text', {default: 'red'})
   turn: Symbol
 
-  @Column('char', {nullable: true})
+  @Column('text', {nullable: true})
   winner: Symbol
 
   @Column('text', {default: 'pending'})

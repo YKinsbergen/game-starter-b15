@@ -32,22 +32,27 @@ import { Board, Row} from './entities'
 //     changes[0].from === null
 // }
 
-// export const calculateWinner = (board: Board): Symbol | Base | null =>
-//   board
-//     .concat(
-//       // vertical winner
-//       [0, 1, 2, 3, 4, 5].map(n => board.map(row => row[n])) as Row[]
-//     )
-//     .concat(
-//       [
-//         // diagonal winner ltr
-//         [0, 1, 2].map(n => board[n][n]),
-//         // diagonal winner rtl
-//         [0, 1, 2].map(n => board[2-n][n])
-//       ] as Row[]
-//     )
-//     .filter(row => row[0] && row.every(symbol => symbol === row[0]))
-//     .map(row => row[0])[0] || null
+export const calculateWinner = (board: Board): any => {
+  const unitsStillStanding:any[] = []
+  const teams:string[] = []
+  board.map(row => {
+    row.map(cell => {
+      if(cell !== null && cell.hasOwnProperty('health')) {
+        unitsStillStanding.push(cell)
+      }
+    })
+  })
+  unitsStillStanding.map(unit => {
+    if(unit !== undefined) {
+      teams.push(unit.team)
+    }
+  })
+  function isBelowThreshold(currentValue) {
+    return currentValue === 'red';
+  }
+  return teams.every(isBelowThreshold)
+}
+  
 
 export const finished = (board: Board): boolean =>
   board
